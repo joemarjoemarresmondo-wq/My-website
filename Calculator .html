@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Calculator</title>
+  <style>
+    body {
+  margin: 0;
+  padding: 0;
+}
+
+h2, p {
+  margin: 10px;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333333;
+}
+ul li {
+  float: left;
+}
+
+ul li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+ul li a:hover {
+  background-color: #111111;
+}
+
+body {
+    text-align: center;
+}
+    body {
+      font-family: Arial;
+      background-color: #f2f2f2;
+      text-align: center;
+      margin-top: 60px;
+    }
+    .calculator {
+      background: white;
+      width: 260px;
+      margin: auto;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px gray;
+    }
+    input {
+      width: 230px;
+      height: 50px;
+      font-size: 22px;
+      text-align: right;
+      margin-bottom: 10px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      padding-right: 10px;
+    }
+    button {
+      width: 55px;
+      height: 55px;
+      font-size: 20px;
+      margin: 5px;
+      border: none;
+      border-radius: 10px;
+      background: #4CAF50;
+      color: white;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    .operator {
+      background: #ff9800;
+    }
+    .operator:hover {
+      background: #e68900;
+    }
+    .clear {
+      background: #f44336;
+    }
+    .clear:hover {
+      background: #da190b;
+    }
+  </style>
+</head>
+<body>
+<ul>
+  <li><a href="Website .html">Home</a></li>
+</ul>
+
+  <div class="calculator">
+    <input type="text" id="display" disabled>
+
+    <br>
+
+    <button onclick="clearDisplay()" class="clear">C</button>
+    <button onclick="appendToDisplay('(')">(</button>
+    <button onclick="appendToDisplay(')')">)</button>
+    <button onclick="appendToDisplay('/')" class="operator">÷</button>
+    <br>
+
+    <button onclick="appendToDisplay('7')">7</button>
+    <button onclick="appendToDisplay('8')">8</button>
+    <button onclick="appendToDisplay('9')">9</button>
+    <button onclick="appendToDisplay('*')" class="operator">×</button>
+    <br>
+
+    <button onclick="appendToDisplay('4')">4</button>
+    <button onclick="appendToDisplay('5')">5</button>
+    <button onclick="appendToDisplay('6')">6</button>
+    <button onclick="appendToDisplay('-')" class="operator">−</button>
+    <br>
+
+    <button onclick="appendToDisplay('1')">1</button>
+    <button onclick="appendToDisplay('2')">2</button>
+    <button onclick="appendToDisplay('3')">3</button>
+    <button onclick="appendToDisplay('+')" class="operator">+</button>
+    <br>
+
+    <button onclick="appendToDisplay('0')">0</button>
+    <button onclick="appendToDisplay('.')">.</button>
+    <button onclick="calculate()" style="width:120px;">=</button>
+  </div>
+
+  <script>
+    function appendToDisplay(value) {
+      document.getElementById('display').value += value;
+    }
+
+    function clearDisplay() {
+      document.getElementById('display').value = '';
+    }
+
+    function calculate() {
+      try {
+        document.getElementById('display').value = eval(document.getElementById('display').value);
+      } catch {
+        document.getElementById('display').value = 'Error';
+      }
+    }
+  </script>
+
+</body>
+</html>
