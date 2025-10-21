@@ -15,142 +15,177 @@
       font-family: Arial, sans-serif;
     }
 
-
-h2, p {
-  margin: 10px;
-}
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #333333;
-}
-ul li {
-  float: left;
-}
-
-ul li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-ul li a:hover {
-  background-color: #111111;
-}
-
-body {
-    text-align: center;
-}
-    body {
-      font-family: Arial;
-      background-color: #f2f2f2;
-      text-align: center;
+    /* === TOP BAR + HAMBURGER === */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      background-color: rgba(51,51,51,0.9);
+      position: relative;
+      z-index: 1000;
     }
+
+    .container {
+      cursor: pointer;
+    }
+
+    .bar1, .bar2, .bar3 {
+      width: 30px;
+      height: 4px;
+      background-color: white;
+      margin: 5px 0;
+      transition: 0.4s;
+    }
+
+    .change .bar1 { transform: translate(0, 9px) rotate(-45deg); }
+    .change .bar2 { opacity: 0; }
+    .change .bar3 { transform: translate(0, -9px) rotate(45deg); }
+
+    /* === DROPDOWN MENU === */
+    .menu {
+      display: none;
+      position: absolute;
+      top: 50px;
+      left: 20px;
+      background-color: rgba(255, 255, 255, 0.95);
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      overflow: hidden;
+      z-index: 999;
+    }
+
+    .menu a {
+      display: block;
+      color: #333;
+      text-decoration: none;
+      padding: 12px 16px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .menu a:hover { background-color: #f0f0f0; }
+
+    /* === CALCULATOR === */
     .calculator {
-        background-color: rgba(255, 255, 255, 0.1)
-      width: 260px;
-      margin: auto;
+      background-color: rgba(255, 255, 255, 0.2);
+      width: 300px;
+      margin: 50px auto;
       padding: 20px;
       border-radius: 15px;
-      box-shadow: 0 0 10px gray;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
     }
+
     input {
-      width: 230px;
-      height: 50px;
-      font-size: 22px;
+      width: 100%;
+      height: 60px;
+      font-size: 28px;
       text-align: right;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
       border: 2px solid #ccc;
       border-radius: 10px;
       padding-right: 10px;
+      background-color: rgba(255,255,255,0.7);
     }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
     button {
-      width: 55px;
-      height: 55px;
-      font-size: 20px;
-      margin: 5px;
+      width: 100%;
+      height: 60px;
+      font-size: 22px;
       border: none;
       border-radius: 10px;
-      background: #4CAF50;
-      color: white;
+      cursor: pointer;
+      transition: 0.2s;
     }
-    button:hover {
-      background: #45a049;
-    }
-    .operator {
-      background: #ff9800;
-    }
-    .operator:hover {
-      background: #e68900;
-    }
-    .clear {
-      background: #f44336;
-    }
-    .clear:hover {
-      background: #da190b;
-    }
+
+    .number { background-color: #4CAF50; color: white; }
+    .number:hover { background-color: #45a049; }
+
+    .operator { background-color: #ff9800; color: white; }
+    .operator:hover { background-color: #e68900; }
+
+    .clear { background-color: #f44336; color: white; }
+    .clear:hover { background-color: #da190b; }
+
+    .equal { background-color: #007bff; color: white; grid-column: span 2; }
+    .equal:hover { background-color: #0056b3; }
+
   </style>
 </head>
 <body>
-<ul>
-  <li><a href="index.html">Home</a></li>
-</ul>
 
-  <div class="calculator">
-    <input type="text" id="display" disabled>
-
-    <br>
-
-    <button onclick="clearDisplay()" class="clear">C</button>
-    <button onclick="appendToDisplay('(')">(</button>
-    <button onclick="appendToDisplay(')')">)</button>
-    <button onclick="appendToDisplay('/')" class="operator">÷</button>
-    <br>
-
-    <button onclick="appendToDisplay('7')">7</button>
-    <button onclick="appendToDisplay('8')">8</button>
-    <button onclick="appendToDisplay('9')">9</button>
-    <button onclick="appendToDisplay('*')" class="operator">×</button>
-    <br>
-
-    <button onclick="appendToDisplay('4')">4</button>
-    <button onclick="appendToDisplay('5')">5</button>
-    <button onclick="appendToDisplay('6')">6</button>
-    <button onclick="appendToDisplay('-')" class="operator">−</button>
-    <br>
-
-    <button onclick="appendToDisplay('1')">1</button>
-    <button onclick="appendToDisplay('2')">2</button>
-    <button onclick="appendToDisplay('3')">3</button>
-    <button onclick="appendToDisplay('+')" class="operator">+</button>
-    <br>
-
-    <button onclick="appendToDisplay('0')">0</button>
-    <button onclick="appendToDisplay('.')">.</button>
-    <button onclick="calculate()" style="width:120px;">=</button>
+<!-- TOP BAR WITH TOGGLE MENU -->
+<div class="top-bar">
+  <div class="container" onclick="toggleMenu(this)">
+    <div class="bar1"></div>
+    <div class="bar2"></div>
+    <div class="bar3"></div>
   </div>
+</div>
 
-  <script>
-    function appendToDisplay(value) {
-      document.getElementById('display').value += value;
-    }
+<!-- DROPDOWN MENU -->
+<div id="menu" class="menu">
+  <a href="index.html">🏠 Home</a>
+</div>
 
-    function clearDisplay() {
-      document.getElementById('display').value = '';
-    }
+<!-- CALCULATOR -->
+<div class="calculator">
+  <input type="text" id="display" disabled>
+  <div class="buttons">
+    <button onclick="clearDisplay()" class="clear">C</button>
+    <button onclick="appendToDisplay('(')" class="operator">(</button>
+    <button onclick="appendToDisplay(')')" class="operator">)</button>
+    <button onclick="appendToDisplay('/')" class="operator">÷</button>
 
-    function calculate() {
-      try {
-        document.getElementById('display').value = eval(document.getElementById('display').value);
-      } catch {
-        document.getElementById('display').value = 'Error';
-      }
-    }
-  </script>
+    <button onclick="appendToDisplay('7')" class="number">7</button>
+    <button onclick="appendToDisplay('8')" class="number">8</button>
+    <button onclick="appendToDisplay('9')" class="number">9</button>
+    <button onclick="appendToDisplay('*')" class="operator">×</button>
+
+    <button onclick="appendToDisplay('4')" class="number">4</button>
+    <button onclick="appendToDisplay('5')" class="number">5</button>
+    <button onclick="appendToDisplay('6')" class="number">6</button>
+    <button onclick="appendToDisplay('-')" class="operator">−</button>
+
+    <button onclick="appendToDisplay('1')" class="number">1</button>
+    <button onclick="appendToDisplay('2')" class="number">2</button>
+    <button onclick="appendToDisplay('3')" class="number">3</button>
+    <button onclick="appendToDisplay('+')" class="operator">+</button>
+
+    <button onclick="appendToDisplay('0')" class="number">0</button>
+    <button onclick="appendToDisplay('.')">.</button>
+    <button onclick="calculate()" class="equal">=</button>
+  </div>
+</div>
+
+<script>
+function toggleMenu(x) {
+  x.classList.toggle("change");
+  var menu = document.getElementById("menu");
+  menu.style.display = (menu.style.display === "block") ? "none" : "block";
+}
+
+function appendToDisplay(value) {
+  document.getElementById('display').value += value;
+}
+
+function clearDisplay() {
+  document.getElementById('display').value = '';
+}
+
+function calculate() {
+  try {
+    document.getElementById('display').value = eval(document.getElementById('display').value);
+  } catch {
+    document.getElementById('display').value = 'Error';
+  }
+}
+</script>
 
 </body>
 </html>
