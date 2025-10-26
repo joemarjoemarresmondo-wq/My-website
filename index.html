@@ -161,31 +161,58 @@
       <div class="bar3"></div>
     </div>
 
+    <!-- SEARCH BAR -->
     <div class="search-box">
-      <input type="text" placeholder="Search...">
-      <button>🔍</button>
+      <input type="text" id="searchInput" placeholder="Search...">
+      <button onclick="searchSite()">🔍</button>
     </div>
   </div>
 
   <!-- Dropdown Menu -->
   <div id="menu" class="menu">
     <a href="index.html">🏠 Home</a>
-    <a href="about .html">ℹ️ About</a>
+    <a href="about.html">ℹ️ About</a>
   </div>
 
   <!-- Main Content -->
-  <h1>Choose a Site</h1>
+  <h1>Main web</h1>
   <p>
     <a href="Shop.html" class="button">Shop Now</a><br>
-    <a href="Calculator .html" class="button">Calculator</a>
+    <a href="Calculator.html" class="button">Calculator</a>
   </p>
 
   <script>
+    // Toggle Menu
     function toggleMenu(x) {
       x.classList.toggle("change");
       var menu = document.getElementById("menu");
       menu.style.display = (menu.style.display === "block") ? "none" : "block";
     }
+
+    // Search Function
+    function searchSite() {
+      let input = document.getElementById("searchInput").value.toLowerCase().trim();
+      let pages = {
+        "home": "index.html",
+        "about": "about.html",
+        "shop": "Shop.html",
+        "calculator": "Calculator.html",
+        "terms": "terms of service.html",
+      };
+
+      if (input in pages) {
+        window.location.href = pages[input];
+      } else if (input !== "") {
+        alert("No results found for: " + input);
+      }
+    }
+    // Allow pressing Enter to search
+document.getElementById("searchInput").addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    searchSite();
+  }
+});
   </script>
 
 </body>
