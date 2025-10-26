@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Terms Of Service</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    /* === PAGE STYLES === */
+    body {
+      margin: 0;
+      padding: 0;
+      background-image: url('3.jpg'); /* Background image */
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      color: black;
+    }
+
+    /* === HAMBURGER MENU CONTAINER === */
+    .menu-container {
+      display: flex;             /* Place hamburger and title in one row */
+      align-items: center;       /* Vertically center items */
+      padding: 15px;
+      background-color: #333;    /* Dark top bar */
+      position: relative;
+    }
+
+    /* === HAMBURGER ICON === */
+    .container {
+      cursor: pointer;           /* Pointer on hover */
+      z-index: 1000;      /* Keep above other content */
+      margin-right: 15px
+    }
+
+    .bar1, .bar2, .bar3 {
+      width: 35px;
+      height: 5px;
+      background-color: white;   /* White bars */
+      margin: 6px 0;
+      transition: 0.4s;          /* Smooth animation */
+    }
+
+    /* === HAMBURGER ANIMATION WHEN CLICKED === */
+    .change .bar1 { transform: translate(0, 11px) rotate(-45deg); }
+    .change .bar2 { opacity: 0; }        /* Middle bar disappears */
+    .change .bar3 { transform: translate(0, -11px) rotate(45deg); }
+
+    /* === DROPDOWN MENU === */
+    .menu {
+      display: none;                    /* Hidden by default */
+      position: absolute;
+      top: 60px;                        /* Below top bar */
+      left: 15px;
+      background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent */
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      overflow: hidden;
+      z-index: 999;
+    }
+
+    .menu a {
+      display: block;
+      color: #333;
+      text-decoration: none;
+      padding: 12px 16px;
+      border-bottom: 1px solid #ddd;
+      transition: 0.3s;
+    }
+
+    .menu a:hover { background-color: #f0f0f0; } /* Highlight on hover */
+
+    /* === PAGE CONTENT STYLES === */
+    h2 {
+      margin: 20px;
+      text-align: center;
+      color: white;
+    }
+    p {
+        text-align: center;
+        color: white;
+    }
+
+    address {
+      text-align: center;
+      font-style: normal;
+      margin-bottom: 40px;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- === TOP BAR WITH HAMBURGER ICON AND TITLE === -->
+  <div class="menu-container">
+    <div class="container" onclick="toggleMenu(this)">
+      <div class="bar1"></div>
+      <div class="bar2"></div>
+      <div class="bar3"></div>
+    </div>
+    <h1 style="color:white; margin:0;"></h1>
+  </div>
+
+  <!-- === DROPDOWN MENU === -->
+  <div id="menu" class="menu">
+    <a href="index.html">🏠 Home</a>
+  </div>
+
+  <!-- === ABOUT SECTION CONTENT === -->
+  <h2>📜 Terms of Service</h2>
+
+<p>Last Updated: October 21, 2025
+<br><br>
+Welcome to our website (“Site”).By accessing or using this Site, you agree to comply with and be bound by these Terms of Service. If you do not agree, please do not use the Site.
+<br><br>
+1. Use of the Site
+
+You agree to use this Site only for lawful purposes and in a way that does not infringe on the rights of others or restrict anyone else's use.
+<br><br>
+2. Intellectual Property
+
+All content on this Site, including text, images, code, and design, is owned by or licensed to us. You may not copy, reproduce, or distribute any material without permission.
+<br><br>
+3. Links to Other Websites
+
+Our Site may contain links to third-party websites. We are not responsible for the content, privacy policies, or practices of any third-party sites.
+<br><br>
+4. Disclaimer
+
+We provide this Site and its content “as is.” We make no guarantees about accuracy, reliability, or availability.
+<br><br>
+5. Limitation of Liability
+
+We are not liable for any damages resulting from the use or inability to use this Site.
+<br><br>
+6. Changes to These Terms
+
+We may update these Terms from time to time. Continued use of the Site after changes means you accept the revised Terms.</p>
+
+  <address><b>
+    Created By: Joemar C. Resmondo.<br> 
+    Section: ICT 11-4.<br>
+    ACLC
+  </b></address>
+
+  <!-- === JAVASCRIPT FOR TOGGLE MENU === -->
+  <script>
+    function toggleMenu(x) {
+      x.classList.toggle("change"); // Animate hamburger into X
+      var menu = document.getElementById("menu");
+      // Show or hide menu
+      menu.style.display = (menu.style.display === "block") ? "none" : "block";
+    }
+  </script>
+
+</body>
+</html>
