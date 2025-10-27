@@ -94,9 +94,6 @@
   }
   button:hover { background-color: #0056b3; }
 
-  .buy-now { background-color: #28a745; }
-  .buy-now:hover { background-color: #1f7d35; }
-
   .shoppee-btn {
     background-color: #ff5722;
   }
@@ -110,7 +107,7 @@
     margin-top: 20px;
   }
 
-  #cart-modal, #info-modal {
+  #info-modal {
     display: none;
     position: fixed;
     top: 0; left: 0;
@@ -120,17 +117,12 @@
     align-items: center;
     z-index: 2000;
   }
-  .cart-content, .info-content {
+  .info-content {
     background: white;
     padding: 20px;
     border-radius: 10px;
     width: 320px;
     text-align: center;
-  }
-  .cart-item {
-    display: flex;
-    justify-content: space-between;
-    margin: 8px 0;
   }
   .close-btn {
     background: red;
@@ -140,23 +132,12 @@
     border-radius: 4px;
     cursor: pointer;
   }
-  .cart-btn {
-    background-color: orange;
-    border: none;
-    color: white;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  .cart-btn:hover { background-color: darkorange; }
   .info-content img {
     width: 100%;
     border-radius: 10px;
     margin-bottom: 10px;
   }
-  a { 
-    color: white;
-  }
+  a { color: white; }
 </style>
 </head>
 <body>
@@ -168,7 +149,6 @@
     <div class="bar2"></div>
     <div class="bar3"></div>
   </div>
-  <button class="cart-btn" onclick="showCart()">🛒 Cart (<span id="cart-count">0</span>)</button>
 </div>
 
 <!-- MENU -->
@@ -178,9 +158,9 @@
 
 <!-- PRODUCTS -->
 <section class="shop-container">
-  <div class="product" onclick="showInfo('2.jpg','black cloverwallpaper',30,'Comfortable cotton T-shirt perfect for daily wear.','https://shopee.ph/BLACK-CLOVER-HD-WALLPAPER-POSTER-21cm-x-29.7cm-(3pcs-minimum-order)-i.274186727.22983743067?extraParams=%7B%22display_model_id%22%3A251775277248%2C%22model_selection_logic%22%3A3%7D&sp_atk=be44ca0f-6017-4cd0-817d-38c623809e78&xptdk=be44ca0f-6017-4cd0-817d-38c623809e78')">
+  <div class="product" onclick="showInfo('2.jpg','Black Clover Wallpaper',30,'Comfortable cotton T-shirt perfect for daily wear.','https://shopee.ph/BLACK-CLOVER-HD-WALLPAPER-POSTER-21cm-x-29.7cm-(3pcs-minimum-order)-i.274186727.22983743067')">
     <img src="2.jpg" alt="Product 1">
-    <h3>Black Clover wallpaper</h3>
+    <h3>Black Clover Wallpaper</h3>
     <p class="price">₱30</p>
   </div>
 
@@ -222,29 +202,14 @@
     <h3 id="info-name"></h3>
     <p id="info-desc"></p>
     <p><strong>Price:</strong> ₱<span id="info-price"></span></p>
-    <label>Quantity: <input type="number" id="quantity" min="1" max="15" value="1" oninput="limitQuantity()"></label>
-    <br><br>
-    <button onclick="addToCartFromModal()">Add to Cart</button>
-    <button class="buy-now" onclick="buyNowFromModal()">Buy Now</button>
-    <button class="shoppee-btn" onclick="goToShopee()">🛍️ Buy on Shopee</button>
+    <button class="shoppee-btn" onclick="goToShopee()">🛍️ Buy now</button>
     <br><br>
     <button class="close-btn" onclick="hideInfo()">Close</button>
   </div>
 </div>
 
-<!-- CART MODAL -->
-<div id="cart-modal">
-  <div class="cart-content">
-    <h3>Your Cart</h3>
-    <div id="cart-items"></div>
-    <p><strong>Total:</strong> ₱<span id="cart-total">0</span></p>
-    <button onclick="checkout()">Checkout</button>
-    <button class="close-btn" onclick="hideCart()">Close</button>
-  </div>
-</div>
-
 <footer>
-  <p>© 2025 Joemar C. Resmondo ICT11-4| All Rights Reserved | <a href="terms of service.html">Terms</a></p>
+  <p>© 2025 Joemar C. Resmondo ICT11-4 | All Rights Reserved | <a href="terms of service.html">Terms</a></p>
 </footer>
 
 <script>
@@ -253,13 +218,6 @@ function toggleMenu(x){
   const menu=document.getElementById("menu");
   menu.style.display=(menu.style.display==="block")?"none":"block";
 }
-
-let cart=[];
-const cartCount=document.getElementById("cart-count");
-const cartModal=document.getElementById("cart-modal");
-const cartItems=document.getElementById("cart-items");
-const cartTotal=document.getElementById("cart-total");
-const SHIPPING_FEE = 199;
 
 let selectedProduct = {};
 
@@ -272,75 +230,12 @@ function showInfo(img,name,price,desc,link){
   document.getElementById("info-modal").style.display="flex";
 }
 
-function hideInfo(){ document.getElementById("info-modal").style.display="none"; }
-
-function addToCartFromModal(){
-  const qty = parseInt(document.getElementById("quantity").value);
-  for(let i=0; i<qty; i++){ cart.push({name:selectedProduct.name, price:selectedProduct.price}); }
-  updateCart();
-  hideInfo();
-  alert(qty + " item(s) added to cart!");
-}
-
-function buyNowFromModal(){
-  const qty = parseInt(document.getElementById("quantity").value);
-  cart = [];
-  for(let i=0; i<qty; i++){ cart.push({name:selectedProduct.name, price:selectedProduct.price}); }
-  updateCart();
-  hideInfo();
-  showCart();
+function hideInfo(){ 
+  document.getElementById("info-modal").style.display="none"; 
 }
 
 function goToShopee(){
   window.open(selectedProduct.link, "_blank");
-}
-
-function limitQuantity() {
-  const qtyInput = document.getElementById("quantity");
-  if (qtyInput.value > 20) qtyInput.value = 20;
-  if (qtyInput.value < 1) qtyInput.value = 1;
-}
-
-function updateCart(){
-  cartCount.textContent = cart.length;
-  cartItems.innerHTML = "";
-  let subtotal = 0;
-  cart.forEach(item=>{
-    subtotal += item.price;
-    const div=document.createElement("div");
-    div.classList.add("cart-item");
-    div.innerHTML = `<span>${item.name}</span><span>₱${item.price}</span>`;
-    cartItems.appendChild(div);
-  });
-
-  let total = subtotal;
-  if(cart.length > 0){
-    let shipping = 0;
-    if(subtotal < 500){
-      shipping = SHIPPING_FEE;
-      const shipDiv=document.createElement("div");
-      shipDiv.classList.add("cart-item");
-      shipDiv.innerHTML=`<strong>Shipping Fee</strong><span>₱${shipping}</span>`;
-      cartItems.appendChild(shipDiv);
-    } else {
-      const shipDiv=document.createElement("div");
-      shipDiv.classList.add("cart-item");
-      shipDiv.innerHTML=`<strong>Shipping Fee</strong><span style="color:green;">FREE</span>`;
-      cartItems.appendChild(shipDiv);
-    }
-    total += shipping;
-  }
-  cartTotal.textContent = total.toFixed(2);
-}
-
-function showCart(){ cartModal.style.display="flex"; }
-function hideCart(){ cartModal.style.display="none"; }
-function checkout(){
-  if(cart.length===0){ alert("Your cart is empty!"); return; }
-  alert("Thank you for your purchase!");
-  cart=[];
-  updateCart();
-  hideCart();
 }
 </script>
 
