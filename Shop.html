@@ -5,48 +5,42 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Shop</title>
 <style>
-  /* === PAGE BACKGROUND AND FONT === */
   body {
     margin: 0;
     padding: 0;
-    background-image: url('3.jpg');          /* Sets background image */
+    background-image: url('3.jpg');
     background-repeat: no-repeat;
-    background-attachment: fixed;            /* Keeps background fixed while scrolling */
-    background-size: cover;                  /* Makes image fill screen */
+    background-attachment: fixed;
+    background-size: cover;
     font-family: Arial, sans-serif;
   }
 
-  /* === TOP BAR (MENU + CART) === */
   .top-bar {
     display: flex;
     align-items: center;
-    justify-content: space-between;          /* Space between menu and cart button */
+    justify-content: space-between;
     padding: 10px 20px;
     background-color: #333;
     position: relative;
     z-index: 1000;
   }
 
-  /* === HAMBURGER MENU BUTTON === */
   .container { cursor: pointer; }
   .bar1, .bar2, .bar3 {
     width: 30px;
     height: 4px;
     background-color: white;
     margin: 5px 0;
-    transition: 0.4s;                        /* Smooth animation */
+    transition: 0.4s;
   }
-
-  /* Turns into “X” when clicked */
   .change .bar1 { transform: translate(0, 9px) rotate(-45deg); }
   .change .bar2 { opacity: 0; }
   .change .bar3 { transform: translate(0, -9px) rotate(45deg); }
 
-  /* === DROPDOWN MENU === */
   .menu {
-    display: none;                           /* Hidden by default */
+    display: none;
     position: absolute;
-    top: 50px;                               /* Below top bar */
+    top: 50px;
     left: 20px;
     background-color: rgba(255,255,255,0.95);
     border-radius: 8px;
@@ -63,15 +57,13 @@
   }
   .menu a:hover { background-color: #f0f0f0; }
 
-  /* === PRODUCT GRID LAYOUT === */
   .shop-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 2fr)); /* Responsive grid */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 2fr));
     gap: 20px;
     padding: 20px;
   }
 
-  /* === EACH PRODUCT CARD === */
   .product {
     background-color: white;
     border-radius: 10px;
@@ -79,9 +71,9 @@
     padding: 15px;
     text-align: center;
     transition: 0.3s;
-    cursor: pointer;                         /* Clickable product */
+    cursor: pointer;
   }
-  .product:hover { transform: scale(1.03); } /* Slight zoom on hover */
+  .product:hover { transform: scale(1.03); }
   .product img {
     width: 100%;
     height: 200px;
@@ -90,7 +82,6 @@
   }
   .price { color: #28a745; font-weight: bold; }
 
-  /* === BUTTON STYLES === */
   button {
     background-color: #007bff;
     color: white;
@@ -111,7 +102,6 @@
   }
   .shoppee-btn:hover { background-color: #e64a19; }
 
-  /* === FOOTER === */
   footer {
     text-align: center;
     background-color: #333;
@@ -120,9 +110,8 @@
     margin-top: 20px;
   }
 
-  /* === MODALS (POP-UP WINDOWS) === */
   #cart-modal, #info-modal {
-    display: none;                           /* Hidden by default */
+    display: none;
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
@@ -131,8 +120,6 @@
     align-items: center;
     z-index: 2000;
   }
-
-  /* === CONTENT INSIDE MODALS === */
   .cart-content, .info-content {
     background: white;
     padding: 20px;
@@ -140,13 +127,11 @@
     width: 320px;
     text-align: center;
   }
-
   .cart-item {
     display: flex;
     justify-content: space-between;
     margin: 8px 0;
   }
-
   .close-btn {
     background: red;
     color: white;
@@ -155,8 +140,6 @@
     border-radius: 4px;
     cursor: pointer;
   }
-
-  /* CART BUTTON ON TOP BAR */
   .cart-btn {
     background-color: orange;
     border: none;
@@ -166,82 +149,80 @@
     cursor: pointer;
   }
   .cart-btn:hover { background-color: darkorange; }
-
   .info-content img {
     width: 100%;
     border-radius: 10px;
     margin-bottom: 10px;
   }
-
-  a { color: white; }
+  a { 
+    color: white;
+  }
 </style>
 </head>
 <body>
 
-<!-- === TOP BAR === -->
+<!-- TOP BAR -->
 <div class="top-bar">
-  <!-- HAMBURGER MENU ICON -->
   <div class="container" onclick="toggleMenu(this)">
     <div class="bar1"></div>
     <div class="bar2"></div>
     <div class="bar3"></div>
   </div>
-
-  <!-- CART BUTTON WITH ITEM COUNT -->
   <button class="cart-btn" onclick="showCart()">🛒 Cart (<span id="cart-count">0</span>)</button>
 </div>
 
-<!-- === MENU DROPDOWN === -->
+<!-- MENU -->
 <div id="menu" class="menu">
   <a href="index.html">🏠 Home</a>
 </div>
 
-<!-- === PRODUCT SECTION === -->
+<!-- PRODUCTS -->
 <section class="shop-container">
-  <!-- Each product triggers showInfo() to open details modal -->
-  <div class="product" onclick="showInfo('2.jpg','Black Clover Wallpaper',30,'Comfortable cotton T-shirt perfect for daily wear.','https://shopee.ph/...')">
+  <div class="product" onclick="showInfo('2.jpg','black cloverwallpaper',30,'Comfortable cotton T-shirt perfect for daily wear.','https://shopee.ph/BLACK-CLOVER-HD-WALLPAPER-POSTER-21cm-x-29.7cm-(3pcs-minimum-order)-i.274186727.22983743067?extraParams=%7B%22display_model_id%22%3A251775277248%2C%22model_selection_logic%22%3A3%7D&sp_atk=be44ca0f-6017-4cd0-817d-38c623809e78&xptdk=be44ca0f-6017-4cd0-817d-38c623809e78')">
     <img src="2.jpg" alt="Product 1">
     <h3>Black Clover wallpaper</h3>
     <p class="price">₱30</p>
   </div>
 
-  <!-- More products below -->
-  <div class="product" onclick="showInfo('1.jpg','Running Shoes',4295,'Durable, lightweight running shoes.','https://shopee.ph/...')">
+  <div class="product" onclick="showInfo('1.jpg','Running Shoes',4295,'Durable, lightweight, and stylish running shoes.','https://shopee.ph/ANTA-Men-PG-7-Travel-2S-Running-Shoes-Cushioning-Rebound-Shock-Absorption-Sports-Shoes-1125C5545-i.267485958.44055269288')">
     <img src="1.jpg" alt="Product 2">
     <h3>Running Shoes</h3>
     <p class="price">₱4,295</p>
   </div>
 
-  <div class="product" onclick="showInfo('5.jpg','T-Shirt',189,'Soft, breathable T-shirt.','https://shopee.ph/...')">
+  <div class="product" onclick="showInfo('5.jpg','T-Shirt',189,'Soft, breathable T-shirt in multiple colors.','https://shopee.ph/product/1292050208/27061317864')">
     <img src="5.jpg" alt="Product 3">
     <h3>T-Shirt</h3>
     <p class="price">₱189</p>
   </div>
 
-  <div class="product" onclick="showInfo('9.jpg','Men Glasses',99,'Men glasses good for sunlight.','https://shopee.ph/...')">
+  <div class="product" onclick="showInfo('9.jpg','Men Glasses',99,'Men glasses good for sunlight.','https://shopee.ph/Multi-Color-Sunglasses-Men-Women-Trendy-Small-Frame-Square-Mesh-Red-Glasses-Rectangular-Sunglasses-i.841961265.19136939546')">
     <img src="9.jpg" alt="Product 4">
     <h3>Men Glasses</h3>
     <p class="price">₱99</p>
   </div>
 
-  <div class="product" onclick="showInfo('10.jpg','Hoodie',599,'Hoodie for cold weather.','https://shopee.ph/...')">
+  <div class="product" onclick="showInfo('10.jpg','Hoodie',599,'Hoodie when there is no one to hug.','https://shopee.ph/Jacket-for-men-Plain-pullover-hoodie-for-men-women-jacket-hoodie-plain-hoodie-jacket-men-Korean-i.1198203741.25821218088')">
     <img src="10.jpg" alt="Product 5">
     <h3>Hoodie</h3>
     <p class="price">₱599</p>
   </div>
+
+  <div class="product" onclick="showInfo('11.jpg','Memes Wallpaper',1999,'Top cat memes wallpaper Rare.','https://shopee.sg/50-100Pcs-Cat-Stickers-Cute-Quirky-Funny-Cat-Head-Stickers-DIY-Waterproof-Doodle-Decals-Stickers-i.839429422.24800418375')">
+    <img src="11.jpg" alt="Product 6">
+    <h3>Memes Wallpaper</h3>
+    <p class="price">₱1,999</p>
+  </div>
 </section>
 
-<!-- === PRODUCT INFO MODAL === -->
+<!-- PRODUCT MODAL -->
 <div id="info-modal">
   <div class="info-content">
     <img id="info-img" src="">
     <h3 id="info-name"></h3>
     <p id="info-desc"></p>
     <p><strong>Price:</strong> ₱<span id="info-price"></span></p>
-
-    <!-- Quantity input -->
     <label>Quantity: <input type="number" id="quantity" min="1" max="15" value="1" oninput="limitQuantity()"></label>
-
     <br><br>
     <button onclick="addToCartFromModal()">Add to Cart</button>
     <button class="buy-now" onclick="buyNowFromModal()">Buy Now</button>
@@ -251,142 +232,113 @@
   </div>
 </div>
 
-<!-- === CART MODAL === -->
+<!-- CART MODAL -->
 <div id="cart-modal">
   <div class="cart-content">
     <h3>Your Cart</h3>
-    <div id="cart-items"></div> <!-- Items will be dynamically added here -->
+    <div id="cart-items"></div>
     <p><strong>Total:</strong> ₱<span id="cart-total">0</span></p>
     <button onclick="checkout()">Checkout</button>
     <button class="close-btn" onclick="hideCart()">Close</button>
   </div>
 </div>
 
-<!-- === FOOTER === -->
 <footer>
   <p>© 2025 My Shop | All Rights Reserved | <a href="terms of service.html">Terms</a></p>
 </footer>
 
 <script>
-/* === TOGGLE MENU (SHOW/HIDE DROPDOWN) === */
 function toggleMenu(x){
-  x.classList.toggle("change"); // Animate hamburger into X
-  const menu = document.getElementById("menu");
-  menu.style.display = (menu.style.display === "block") ? "none" : "block";
+  x.classList.toggle("change");
+  const menu=document.getElementById("menu");
+  menu.style.display=(menu.style.display==="block")?"none":"block";
 }
 
-/* === SHOPPING CART DATA === */
-let cart = []; // Holds items added to cart
-const cartCount = document.getElementById("cart-count");
-const cartModal = document.getElementById("cart-modal");
-const cartItems = document.getElementById("cart-items");
-const cartTotal = document.getElementById("cart-total");
-const SHIPPING_FEE = 199; // Extra fee if below ₱500
+let cart=[];
+const cartCount=document.getElementById("cart-count");
+const cartModal=document.getElementById("cart-modal");
+const cartItems=document.getElementById("cart-items");
+const cartTotal=document.getElementById("cart-total");
+const SHIPPING_FEE = 199;
 
-/* === TEMPORARY STORAGE FOR SELECTED PRODUCT === */
 let selectedProduct = {};
 
-/* === SHOW PRODUCT INFO IN MODAL === */
-function showInfo(img, name, price, desc, link){
-  selectedProduct = {img, name, price, desc, link};  // Save details
+function showInfo(img,name,price,desc,link){
+  selectedProduct = {img,name,price,desc,link};
   document.getElementById("info-img").src = img;
   document.getElementById("info-name").textContent = name;
   document.getElementById("info-price").textContent = price;
   document.getElementById("info-desc").textContent = desc;
-  document.getElementById("info-modal").style.display = "flex";
+  document.getElementById("info-modal").style.display="flex";
 }
 
-/* === CLOSE PRODUCT MODAL === */
-function hideInfo(){
-  document.getElementById("info-modal").style.display = "none";
-}
+function hideInfo(){ document.getElementById("info-modal").style.display="none"; }
 
-/* === ADD SELECTED PRODUCT TO CART === */
 function addToCartFromModal(){
   const qty = parseInt(document.getElementById("quantity").value);
-  for(let i = 0; i < qty; i++){
-    cart.push({name: selectedProduct.name, price: selectedProduct.price});
-  }
+  for(let i=0; i<qty; i++){ cart.push({name:selectedProduct.name, price:selectedProduct.price}); }
   updateCart();
   hideInfo();
   alert(qty + " item(s) added to cart!");
 }
 
-/* === BUY NOW: CLEARS CART AND SHOWS ONLY SELECTED PRODUCT === */
 function buyNowFromModal(){
   const qty = parseInt(document.getElementById("quantity").value);
   cart = [];
-  for(let i = 0; i < qty; i++){
-    cart.push({name: selectedProduct.name, price: selectedProduct.price});
-  }
+  for(let i=0; i<qty; i++){ cart.push({name:selectedProduct.name, price:selectedProduct.price}); }
   updateCart();
   hideInfo();
-  showCart(); // Open cart modal
+  showCart();
 }
 
-/* === OPEN PRODUCT PAGE ON SHOPEE === */
 function goToShopee(){
-  window.open(selectedProduct.link, "_blank"); // Opens in new tab
+  window.open(selectedProduct.link, "_blank");
 }
 
-/* === LIMIT QUANTITY INPUT === */
 function limitQuantity() {
   const qtyInput = document.getElementById("quantity");
   if (qtyInput.value > 20) qtyInput.value = 20;
   if (qtyInput.value < 1) qtyInput.value = 1;
 }
 
-/* === UPDATE CART DISPLAY === */
 function updateCart(){
-  cartCount.textContent = cart.length; // Show item count
-  cartItems.innerHTML = ""; // Clear old items
+  cartCount.textContent = cart.length;
+  cartItems.innerHTML = "";
   let subtotal = 0;
-
-  // Display each item
-  cart.forEach(item => {
+  cart.forEach(item=>{
     subtotal += item.price;
-    const div = document.createElement("div");
+    const div=document.createElement("div");
     div.classList.add("cart-item");
     div.innerHTML = `<span>${item.name}</span><span>₱${item.price}</span>`;
     cartItems.appendChild(div);
   });
 
-  // Calculate shipping
   let total = subtotal;
   if(cart.length > 0){
     let shipping = 0;
     if(subtotal < 500){
-      shipping = SHIPPING_FEE; // Add shipping fee if below ₱500
-      const shipDiv = document.createElement("div");
+      shipping = SHIPPING_FEE;
+      const shipDiv=document.createElement("div");
       shipDiv.classList.add("cart-item");
-      shipDiv.innerHTML = `<strong>Shipping Fee</strong><span>₱${shipping}</span>`;
+      shipDiv.innerHTML=`<strong>Shipping Fee</strong><span>₱${shipping}</span>`;
       cartItems.appendChild(shipDiv);
     } else {
-      const shipDiv = document.createElement("div");
+      const shipDiv=document.createElement("div");
       shipDiv.classList.add("cart-item");
-      shipDiv.innerHTML = `<strong>Shipping Fee</strong><span style="color:green;">FREE</span>`;
+      shipDiv.innerHTML=`<strong>Shipping Fee</strong><span style="color:green;">FREE</span>`;
       cartItems.appendChild(shipDiv);
     }
     total += shipping;
   }
-
-  cartTotal.textContent = total.toFixed(2); // Update total
+  cartTotal.textContent = total.toFixed(2);
 }
 
-/* === SHOW CART MODAL === */
-function showCart(){ cartModal.style.display = "flex"; }
-
-/* === HIDE CART MODAL === */
-function hideCart(){ cartModal.style.display = "none"; }
-
-/* === CHECKOUT FUNCTION === */
+function showCart(){ cartModal.style.display="flex"; }
+function hideCart(){ cartModal.style.display="none"; }
 function checkout(){
-  if(cart.length === 0){
-    alert("Your cart is empty!");
-    return;
-  }
+  if(cart.length===0){ alert("Your cart is empty!"); return; }
   alert("Thank you for your purchase!");
-  cart = [];
+  cart=[];
   updateCart();
   hideCart();
 }
