@@ -26,10 +26,7 @@
     z-index: 1000;
   }
 
-  .container {
-    cursor: pointer;
-  }
-
+  .container { cursor: pointer; }
   .bar1, .bar2, .bar3 {
     width: 30px;
     height: 4px;
@@ -37,7 +34,6 @@
     margin: 5px 0;
     transition: 0.4s;
   }
-
   .change .bar1 { transform: translate(0, 9px) rotate(-45deg); }
   .change .bar2 { opacity: 0; }
   .change .bar3 { transform: translate(0, -9px) rotate(45deg); }
@@ -48,13 +44,12 @@
     position: absolute;
     top: 50px;
     left: 20px;
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: rgba(255,255,255,0.95);
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     overflow: hidden;
     z-index: 999;
   }
-
   .menu a {
     display: block;
     color: #333;
@@ -62,7 +57,6 @@
     padding: 12px 16px;
     border-bottom: 1px solid #ddd;
   }
-
   .menu a:hover { background-color: #f0f0f0; }
 
   /* === SHOP GRID === */
@@ -70,16 +64,14 @@
     font-size: 50px;
     text-align: center;
     margin-top: 20px;
-    color: black; /* Change to black for main title */
+    color: black;
   }
-
   .shop-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 2fr));
     gap: 20px;
     padding: 20px;
   }
-
   .product {
     background-color: white;
     border-radius: 10px;
@@ -88,34 +80,33 @@
     text-align: center;
     transition: 0.3s;
   }
-
   .product:hover { transform: scale(1.03); }
-
   .product img {
     width: 100%;
     height: 200px;
     object-fit: cover;
     border-radius: 10px;
   }
-
   .product h3 { margin: 10px 0; }
-
   .price { color: #28a745; font-weight: bold; }
 
-  a.button {
-    display: inline-block;
+  button {
     background-color: #007bff;
     color: white;
-    text-decoration: none;
+    border: none;
     padding: 10px 15px;
     border-radius: 5px;
+    cursor: pointer;
     transition: background 0.3s;
+    margin: 5px;
   }
+  button:hover { background-color: #0056b3; }
 
-  a.button:hover { background-color: #0056b3; }
- a {
-     color: white;
- }
+  .buy-now { background-color: #28a745; }
+  .buy-now:hover { background-color: #1f7d35; }
+
+  a { color: white; }
+
   footer {
     text-align: center;
     background-color: #333;
@@ -123,6 +114,46 @@
     padding: 10px 0;
     margin-top: 20px;
   }
+
+  /* === CART MODAL === */
+  #cart-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+  }
+  .cart-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 320px;
+  }
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 0;
+  }
+  .close-btn {
+    background: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .cart-btn {
+    background-color: orange;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .cart-btn:hover { background-color: darkorange; }
 </style>
 </head>
 <body>
@@ -134,7 +165,7 @@
     <div class="bar2"></div>
     <div class="bar3"></div>
   </div>
-     <h1 style="color:white; margin:0;"></h1>
+  <button class="cart-btn" onclick="showCart()">🛒 Cart (<span id="cart-count">0</span>)</button>
 </div>
 
 <!-- DROPDOWN MENU -->
@@ -148,33 +179,125 @@
     <img src="2.jpg" alt="Product 1">
     <h3>Stylish T-Shirt</h3>
     <p class="price">₱30</p>
-    <a href="#" class="button" target="_blank">Buy Now</a>
+    <button onclick="addToCart('Stylish T-Shirt', 30)">Add to Cart</button>
+    <button class="buy-now" onclick="buyNow('Stylish T-Shirt', 30)">Buy Now</button>
   </div>
 
   <div class="product">
     <img src="1.jpg" alt="Product 2">
     <h3>Running Shoes</h3>
     <p class="price">₱4,295</p>
-    <a href="#" class="button" target="_blank">Buy Now</a>
+    <button onclick="addToCart('Running Shoes', 4295)">Add to Cart</button>
+    <button class="buy-now" onclick="buyNow('Running Shoes', 4295)">Buy Now</button>
   </div>
 
   <div class="product">
     <img src="5.jpg" alt="Product 3">
-    <h3>T-shirt</h3>
+    <h3>T-Shirt</h3>
     <p class="price">₱189</p>
-    <a href="#" class="button" target="_blank">Buy Now</a>
+    <button onclick="addToCart('T-Shirt', 189)">Add to Cart</button>
+    <button class="buy-now" onclick="buyNow('T-Shirt', 189)">Buy Now</button>
   </div>
 </section>
 
+<!-- CART MODAL -->
+<div id="cart-modal">
+  <div class="cart-content">
+    <h3>Your Cart</h3>
+    <div id="cart-items"></div>
+    <p><strong>Total:</strong> ₱<span id="cart-total">0</span></p>
+    <button onclick="checkout()">Checkout</button>
+    <button class="close-btn" onclick="hideCart()">Close</button>
+  </div>
+</div>
+
 <footer>
-  <p>© 2025 My Shop | All Rights Reserved| <a href="terms of service.html">Terms</a></p>
+  <p>© 2025 My Shop | All Rights Reserved | <a href="terms of service.html">Terms</a></p>
 </footer>
 
 <script>
-function toggleMenu(x) {
+function toggleMenu(x){
   x.classList.toggle("change");
-  var menu = document.getElementById("menu");
-  menu.style.display = (menu.style.display === "block") ? "none" : "block";
+  const menu=document.getElementById("menu");
+  menu.style.display=(menu.style.display==="block")?"none":"block";
+}
+
+// --- CART LOGIC ---
+let cart=[];
+const cartCount=document.getElementById("cart-count");
+const cartModal=document.getElementById("cart-modal");
+const cartItems=document.getElementById("cart-items");
+const cartTotal=document.getElementById("cart-total");
+
+function addToCart(name,price){
+  cart.push({name,price});
+  updateCart();
+}
+
+function buyNow(name,price){
+  cart=[{name,price}];     // replace cart with this item only
+  updateCart();
+  showCart();
+}
+
+function updateCart(){
+  cartCount.textContent=cart.length;
+  cartItems.innerHTML="";
+  let total=0;
+  cart.forEach(item=>{
+    total+=item.price;
+    const div=document.createElement("div");
+    div.classList.add("cart-item");
+    div.innerHTML=`<span>${item.name}</span><span>₱${item.price}</span>`;
+    cartItems.appendChild(div);
+  });
+  cartTotal.textContent=total.toFixed(2);
+}
+
+function showCart(){ cartModal.style.display="flex"; }
+function hideCart(){ cartModal.style.display="none"; }
+
+function checkout(){
+  if(cart.length===0){ alert("Your cart is empty!"); return; }
+  alert("Thank you for your purchase!");
+  cart=[];
+  updateCart();
+  hideCart();
+}
+const SHIPPING_FEE = 199; // ₱100 flat shipping
+function updateCart(){
+  cartCount.textContent = cart.length;
+  cartItems.innerHTML = "";
+  let subtotal = 0;
+  cart.forEach(item => {
+    subtotal += item.price;
+    const div = document.createElement("div");
+    div.classList.add("cart-item");
+    div.innerHTML = `<span>${item.name}</span><span>₱${item.price}</span>`;
+    cartItems.appendChild(div);
+  });
+
+  let total = subtotal;
+  if (cart.length > 0) {
+    const shipping = SHIPPING_FEE;
+    const shipDiv = document.createElement("div");
+    shipDiv.classList.add("cart-item");
+    shipDiv.innerHTML = `<strong>Shipping Fee</strong><span>₱${shipping}</span>`;
+    cartItems.appendChild(shipDiv);
+    total += shipping;
+  }
+
+  cartTotal.textContent = total.toFixed(2);
+}
+function checkout(){
+  if(cart.length === 0){
+    alert("Your cart is empty!");
+    return;
+  }
+  alert("Thank you for your purchase! Your total includes ₱" + SHIPPING_FEE + " shipping.");
+  cart = [];
+  updateCart();
+  hideCart();
 }
 </script>
 
