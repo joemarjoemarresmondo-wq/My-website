@@ -334,7 +334,7 @@ function showCart(){ cartModal.style.display="flex"; }
 function hideCart(){ cartModal.style.display="none"; }
 function checkout(){
   if(cart.length===0){ alert("Your cart is empty!"); return; }
-  alert("Thank you for your purchase! Shipping fee ₱"+SHIPPING_FEE+" included.");
+  alert("Thank you for your purchase.");
   cart=[];
   updateCart();
   hideCart();
