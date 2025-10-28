@@ -1,243 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Shop</title>
-<style>
-  body {
-    margin: 0;
-    padding: 0;
-    background-image: url('3.jpg');
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    font-family: Arial, sans-serif;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Online Shop</title>
+  <style>
+    body {
+      background-image: url('3.jpg')
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    header {
+      background-color: #222;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
 
-  .top-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px;
-    background-color: #333;
-    position: relative;
-    z-index: 1000;
-  }
+    /* Shopee button styling */
+    .shopee-button {
+      display: inline-block;
+      background-color: #ff5722;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s;
+      margin-bottom: 15px;
+    }
+    .shopee-button:hover {
+      background-color: #e64a19;
+    }
 
-  .container { cursor: pointer; }
-  .bar1, .bar2, .bar3 {
-    width: 30px;
-    height: 4px;
-    background-color: white;
-    margin: 5px 0;
-    transition: 0.4s;
-  }
-  .change .bar1 { transform: translate(0, 9px) rotate(-45deg); }
-  .change .bar2 { opacity: 0; }
-  .change .bar3 { transform: translate(0, -9px) rotate(45deg); }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+    }
+    .product {
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin: 10px;
+      width: 250px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+    .product:hover {
+      transform: scale(1.03);
+    }
+    .product img {
+      width: 100%;
+      border-radius: 8px 8px 0 0;
+    }
+    .product h3 {
+      margin: 10px 0;
+    }
+    .product p {
+      color: #555;
+    }
+    .price {
+      font-size: 18px;
+      color: #27ae60;
+      margin-bottom: 10px;
+    }
 
-  .menu {
-    display: none;
-    position: absolute;
-    top: 50px;
-    left: 20px;
-    background-color: rgba(255,255,255,0.95);
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    overflow: hidden;
-    z-index: 999;
-  }
-  .menu a {
-    display: block;
-    color: #333;
-    text-decoration: none;
-    padding: 12px 16px;
-    border-bottom: 1px solid #ddd;
-  }
-  .menu a:hover { background-color: #f0f0f0; }
-
-  .shop-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 2fr));
-    gap: 20px;
-    padding: 20px;
-  }
-
-  .product {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    padding: 15px;
-    text-align: center;
-    transition: 0.3s;
-    cursor: pointer;
-  }
-  .product:hover { transform: scale(1.03); }
-  .product img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 10px;
-  }
-  .price { color: #28a745; font-weight: bold; }
-
-  button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s;
-    margin: 5px;
-  }
-  button:hover { background-color: #0056b3; }
-
-  .shoppee-btn {
-    background-color: #ff5722;
-  }
-  .shoppee-btn:hover { background-color: #e64a19; }
-
-  footer {
-    text-align: center;
-    background-color: #333;
-    color: white;
-    padding: 10px 0;
-    margin-top: 20px;
-  }
-
-  #info-modal {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.6);
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
-  }
-  .info-content {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 320px;
-    text-align: center;
-  }
-  .close-btn {
-    background: red;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  .info-content img {
-    width: 100%;
-    border-radius: 10px;
-    margin-bottom: 10px;
-  }
-  a { color: white; }
-</style>
+    footer {
+      text-align: center;
+      background-color: #222;
+      color: white;
+      padding: 10px;
+      margin-top: 30px;
+    }
+  </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
-<div class="top-bar">
-  <div class="container" onclick="toggleMenu(this)">
-    <div class="bar1"></div>
-    <div class="bar2"></div>
-    <div class="bar3"></div>
-  </div>
-</div>
+  <header>
+    <h1>Welcome to My Shop</h1>
+    <p>Find the best deals on your favorite products!</p>
+    <!-- Global Shopee Button -->
+    <a href="https://shopee.com" target="_blank" class="shopee-button">Visit Our Shopee Store</a>
+  </header>
 
-<!-- MENU -->
-<div id="menu" class="menu">
-  <a href="index.html">🏠 Home</a>
-</div>
+  <div class="container">
+    <div class="product">
+      <img src="1.jpg" alt="Product 1">
+      <h3>Product 1</h3>
+      <p>Short description of the product.</p>
+      <div class="price">$19.99</div>
+      <a href="" target="_blank" class="shopee-button">Buy on Shopee</a>
+    </div>
 
-<!-- PRODUCTS -->
-<section class="shop-container">
-  <div class="product" onclick="showInfo('2.jpg','Black Clover Wallpaper',30,'Comfortable cotton T-shirt perfect for daily wear.','https://shopee.ph/BLACK-CLOVER-HD-WALLPAPER-POSTER-21cm-x-29.7cm-(3pcs-minimum-order)-i.274186727.22983743067')">
-    <img src="2.jpg" alt="Product 1">
-    <h3>Black Clover Wallpaper</h3>
-    <p class="price">₱30</p>
-  </div>
-
-  <div class="product" onclick="showInfo('1.jpg','Running Shoes',4295,'Durable, lightweight, and stylish running shoes.','https://shopee.ph/ANTA-Men-PG-7-Travel-2S-Running-Shoes-Cushioning-Rebound-Shock-Absorption-Sports-Shoes-1125C5545-i.267485958.44055269288')">
-    <img src="1.jpg" alt="Product 2">
-    <h3>Running Shoes</h3>
-    <p class="price">₱4,295</p>
+    <div class="product">
+      <img src="2.jpg" alt="Product 2">
+      <h3>Product 2</h3>
+      <p>Another awesome item for your collection.</p>
+      <div class="price">$29.99</div>
+      <a href="https://shopee.ph/product/1507851952/29433031659" target="_blank" class="shopee-button">Buy on Shopee</a>
+    </div>
   </div>
 
-  <div class="product" onclick="showInfo('5.jpg','T-Shirt',189,'Soft, breathable T-shirt in multiple colors.','https://shopee.ph/product/1292050208/27061317864')">
-    <img src="5.jpg" alt="Product 3">
-    <h3>T-Shirt</h3>
-    <p class="price">₱189</p>
-  </div>
-
-  <div class="product" onclick="showInfo('9.jpg','Men Glasses',99,'Men glasses good for sunlight.','https://shopee.ph/Multi-Color-Sunglasses-Men-Women-Trendy-Small-Frame-Square-Mesh-Red-Glasses-Rectangular-Sunglasses-i.841961265.19136939546')">
-    <img src="9.jpg" alt="Product 4">
-    <h3>Men Glasses</h3>
-    <p class="price">₱99</p>
-  </div>
-
-  <div class="product" onclick="showInfo('10.jpg','Hoodie',599,'Hoodie when there is no one to hug.','https://shopee.ph/Jacket-for-men-Plain-pullover-hoodie-for-men-women-jacket-hoodie-plain-hoodie-jacket-men-Korean-i.1198203741.25821218088')">
-    <img src="10.jpg" alt="Product 5">
-    <h3>Hoodie</h3>
-    <p class="price">₱599</p>
-  </div>
-
-  <div class="product" onclick="showInfo('11.jpg','Memes Wallpaper',1999,'Top cat memes wallpaper Rare.','https://shopee.sg/50-100Pcs-Cat-Stickers-Cute-Quirky-Funny-Cat-Head-Stickers-DIY-Waterproof-Doodle-Decals-Stickers-i.839429422.24800418375')">
-    <img src="11.jpg" alt="Product 6">
-    <h3>Memes Wallpaper</h3>
-    <p class="price">₱1,999</p>
-  </div>
-</section>
-
-<!-- PRODUCT MODAL -->
-<div id="info-modal">
-  <div class="info-content">
-    <img id="info-img" src="">
-    <h3 id="info-name"></h3>
-    <p id="info-desc"></p>
-    <p><strong>Price:</strong> ₱<span id="info-price"></span></p>
-    <button class="shoppee-btn" onclick="goToShopee()">🛍️ Buy now</button>
-    <br><br>
-    <button class="close-btn" onclick="hideInfo()">Close</button>
-  </div>
-</div>
-
-<footer>
-  <p>© 2025 Joemar C. Resmondo ICT11-4 | All Rights Reserved | <a href="terms of service.html">Terms</a></p>
-</footer>
-
-<script>
-function toggleMenu(x){
-  x.classList.toggle("change");
-  const menu=document.getElementById("menu");
-  menu.style.display=(menu.style.display==="block")?"none":"block";
-}
-
-let selectedProduct = {};
-
-function showInfo(img,name,price,desc,link){
-  selectedProduct = {img,name,price,desc,link};
-  document.getElementById("info-img").src = img;
-  document.getElementById("info-name").textContent = name;
-  document.getElementById("info-price").textContent = price;
-  document.getElementById("info-desc").textContent = desc;
-  document.getElementById("info-modal").style.display="flex";
-}
-
-function hideInfo(){ 
-  document.getElementById("info-modal").style.display="none"; 
-}
-
-function goToShopee(){
-  window.open(selectedProduct.link, "_blank");
-}
-</script>
+  <footer>
+    <p>&copy; 2025 My Shop. All rights reserved.</p>
+  </footer>
 
 </body>
 </html>
