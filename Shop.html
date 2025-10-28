@@ -1,113 +1,347 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Online Shop</title>
-  <style>
-    body {
-      background-image: url('3.jpg')
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-    }
-    header {
-      background-color: #222;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Shop</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background-image: url('3.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    font-family: Arial, sans-serif;
+  }
 
-    /* Shopee button styling */
-    .shopee-button {
-      display: inline-block;
-      background-color: #ff5722;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background-color 0.3s;
-      margin-bottom: 15px;
-    }
-    .shopee-button:hover {
-      background-color: #e64a19;
-    }
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #333;
+    position: relative;
+    z-index: 1000;
+  }
 
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 20px;
-    }
-    .product {
-      background-color: white;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      margin: 10px;
-      width: 250px;
-      text-align: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      transition: transform 0.2s;
-    }
-    .product:hover {
-      transform: scale(1.03);
-    }
-    .product img {
-      width: 100%;
-      border-radius: 8px 8px 0 0;
-    }
-    .product h3 {
-      margin: 10px 0;
-    }
-    .product p {
-      color: #555;
-    }
-    .price {
-      font-size: 18px;
-      color: #27ae60;
-      margin-bottom: 10px;
-    }
+  .container { cursor: pointer; }
+  .bar1, .bar2, .bar3 {
+    width: 30px;
+    height: 4px;
+    background-color: white;
+    margin: 5px 0;
+    transition: 0.4s;
+  }
+  .change .bar1 { transform: translate(0, 9px) rotate(-45deg); }
+  .change .bar2 { opacity: 0; }
+  .change .bar3 { transform: translate(0, -9px) rotate(45deg); }
 
-    footer {
-      text-align: center;
-      background-color: #222;
-      color: white;
-      padding: 10px;
-      margin-top: 30px;
-    }
-  </style>
+  .menu {
+    display: none;
+    position: absolute;
+    top: 50px;
+    left: 20px;
+    background-color: rgba(255,255,255,0.95);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    overflow: hidden;
+    z-index: 999;
+  }
+  .menu a {
+    display: block;
+    color: #333;
+    text-decoration: none;
+    padding: 12px 16px;
+    border-bottom: 1px solid #ddd;
+  }
+  .menu a:hover { background-color: #f0f0f0; }
+
+  .shop-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 2fr));
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .product {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 15px;
+    text-align: center;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+  .product:hover { transform: scale(1.03); }
+  .product img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  .price { color: #28a745; font-weight: bold; }
+
+  button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin: 5px;
+  }
+  button:hover { background-color: #0056b3; }
+
+  .buy-now { background-color: #28a745; }
+  .buy-now:hover { background-color: #1f7d35; }
+
+  .shoppee-btn {
+    background-color: #ff5722;
+  }
+  .shoppee-btn:hover { background-color: #e64a19; }
+
+  footer {
+    text-align: center;
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    margin-top: 20px;
+  }
+
+  #cart-modal, #info-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+  }
+  .cart-content, .info-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 320px;
+    text-align: center;
+  }
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 0;
+  }
+  .close-btn {
+    background: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .cart-btn {
+    background-color: orange;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .cart-btn:hover { background-color: darkorange; }
+  .info-content img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  a { 
+    color: white;
+  }
+</style>
 </head>
 <body>
 
-  <header>
-    <h1>Welcome to My Shop</h1>
-    <p>Find the best deals on your favorite products!</p>
-    <!-- Global Shopee Button -->
-  </header>
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="container" onclick="toggleMenu(this)">
+    <div class="bar1"></div>
+    <div class="bar2"></div>
+    <div class="bar3"></div>
+  </div>
+  <button class="cart-btn" onclick="showCart()">🛒 Cart (<span id="cart-count">0</span>)</button>
+</div>
 
-  <div class="container">
-    <div class="product">
-      <img src="1.jpg" alt="Product 1">
-      <h3>Running Shop</h3>
-      <p>Running Shoes high quality.</p>
-      <div class="price">$19.99</div>
-      <a href="https://shopee.ph/ANTA-Men-PG-7-Travel-2S-Running-Shoes-Cushioning-Rebound-Shock-Absorption-Sports-Shoes-1125C5545-i.267485958.44055269288" target="_blank" class="shopee-button">Buy on Shopee</a>
-    </div>
+<!-- MENU -->
+<div id="menu" class="menu">
+  <a href="index.html">🏠 Home</a>
+</div>
 
-    <div class="product">
-      <img src="2.jpg" alt="Product 2">
-      <h3>Black Clover</h3>
-      <p>Anime Poster</p>
-      <div class="price">$29.99</div>
-      <a href="https://shopee.ph/product/1507851952/29433031659" target="_blank" class="shopee-button">Buy on Shopee</a>
-    </div>
+<!-- PRODUCTS -->
+<section class="shop-container">
+  <div class="product" onclick="showInfo('2.jpg','black cloverwallpaper',30,'Comfortable cotton T-shirt perfect for daily wear.','https://shopee.ph/BLACK-CLOVER-HD-WALLPAPER-POSTER-21cm-x-29.7cm-(3pcs-minimum-order)-i.274186727.22983743067?extraParams=%7B%22display_model_id%22%3A251775277248%2C%22model_selection_logic%22%3A3%7D&sp_atk=be44ca0f-6017-4cd0-817d-38c623809e78&xptdk=be44ca0f-6017-4cd0-817d-38c623809e78')">
+    <img src="2.jpg" alt="Product 1">
+    <h3>Black Clover wallpaper</h3>
+    <p class="price">₱30</p>
   </div>
 
-  <footer>
-    <p>&copy; 2025 My Shop. All rights reserved.</p>
-  </footer>
+  <div class="product" onclick="showInfo('1.jpg','Running Shoes',4295,'Durable, lightweight, and stylish running shoes.','https://shopee.ph/ANTA-Men-PG-7-Travel-2S-Running-Shoes-Cushioning-Rebound-Shock-Absorption-Sports-Shoes-1125C5545-i.267485958.44055269288')">
+    <img src="1.jpg" alt="Product 2">
+    <h3>Running Shoes</h3>
+    <p class="price">₱4,295</p>
+  </div>
+
+  <div class="product" onclick="showInfo('5.jpg','T-Shirt',189,'Soft, breathable T-shirt in multiple colors.','https://shopee.ph/product/1292050208/27061317864')">
+    <img src="5.jpg" alt="Product 3">
+    <h3>T-Shirt</h3>
+    <p class="price">₱189</p>
+  </div>
+
+  <div class="product" onclick="showInfo('9.jpg','Men Glasses',99,'Men glasses good for sunlight.','https://shopee.ph/Multi-Color-Sunglasses-Men-Women-Trendy-Small-Frame-Square-Mesh-Red-Glasses-Rectangular-Sunglasses-i.841961265.19136939546')">
+    <img src="9.jpg" alt="Product 4">
+    <h3>Men Glasses</h3>
+    <p class="price">₱99</p>
+  </div>
+
+  <div class="product" onclick="showInfo('10.jpg','Hoodie',599,'Hoodie when there is no one to hug.','https://shopee.ph/Jacket-for-men-Plain-pullover-hoodie-for-men-women-jacket-hoodie-plain-hoodie-jacket-men-Korean-i.1198203741.25821218088')">
+    <img src="10.jpg" alt="Product 5">
+    <h3>Hoodie</h3>
+    <p class="price">₱599</p>
+  </div>
+
+  <div class="product" onclick="showInfo('11.jpg','Memes Wallpaper',1999,'Top cat memes wallpaper Rare.','https://shopee.sg/50-100Pcs-Cat-Stickers-Cute-Quirky-Funny-Cat-Head-Stickers-DIY-Waterproof-Doodle-Decals-Stickers-i.839429422.24800418375')">
+    <img src="11.jpg" alt="Product 6">
+    <h3>Memes Wallpaper</h3>
+    <p class="price">₱1,999</p>
+  </div>
+</section>
+
+<!-- PRODUCT MODAL -->
+<div id="info-modal">
+  <div class="info-content">
+    <img id="info-img" src="">
+    <h3 id="info-name"></h3>
+    <p id="info-desc"></p>
+    <p><strong>Price:</strong> ₱<span id="info-price"></span></p>
+    <label>Quantity: <input type="number" id="quantity" min="1" max="15" value="1" oninput="limitQuantity()"></label>
+    <br><br>
+    <button onclick="addToCartFromModal()">Add to Cart</button>
+    <button class="buy-now" onclick="buyNowFromModal()">Buy Now</button>
+    <br><br>
+    <button class="close-btn" onclick="hideInfo()">Close</button>
+  </div>
+</div>
+
+<!-- CART MODAL -->
+<div id="cart-modal">
+  <div class="cart-content">
+    <h3>Your Cart</h3>
+    <div id="cart-items"></div>
+    <p><strong>Total:</strong> ₱<span id="cart-total">0</span></p>
+    <button onclick="checkout()">Checkout</button>
+    <button class="close-btn" onclick="hideCart()">Close</button>
+  </div>
+</div>
+
+<footer>
+  <p>© 2025 My Shop | All Rights Reserved | <a href="terms of service.html">Terms</a></p>
+</footer>
+
+<script>
+function toggleMenu(x){
+  x.classList.toggle("change");
+  const menu=document.getElementById("menu");
+  menu.style.display=(menu.style.display==="block")?"none":"block";
+}
+
+let cart=[];
+const cartCount=document.getElementById("cart-count");
+const cartModal=document.getElementById("cart-modal");
+const cartItems=document.getElementById("cart-items");
+const cartTotal=document.getElementById("cart-total");
+const SHIPPING_FEE = 199;
+
+let selectedProduct = {};
+
+function showInfo(img,name,price,desc,link){
+  selectedProduct = {img,name,price,desc,link};
+  document.getElementById("info-img").src = img;
+  document.getElementById("info-name").textContent = name;
+  document.getElementById("info-price").textContent = price;
+  document.getElementById("info-desc").textContent = desc;
+  document.getElementById("info-modal").style.display="flex";
+}
+
+function hideInfo(){ document.getElementById("info-modal").style.display="none"; }
+
+function addToCartFromModal(){
+  const qty = parseInt(document.getElementById("quantity").value);
+  for(let i=0; i<qty; i++){ cart.push({name:selectedProduct.name, price:selectedProduct.price}); }
+  updateCart();
+  hideInfo();
+  alert(qty + " item(s) added to cart!");
+}
+
+function buyNowFromModal(){
+  const qty = parseInt(document.getElementById("quantity").value);
+  cart = [];
+  for(let i=0; i<qty; i++){ cart.push({name:selectedProduct.name, price:selectedProduct.price}); }
+  updateCart();
+  hideInfo();
+  showCart();
+}
+
+function goToShopee(){
+  window.open(selectedProduct.link, "_blank");
+}
+
+function limitQuantity() {
+  const qtyInput = document.getElementById("quantity");
+  if (qtyInput.value > 20) qtyInput.value = 20;
+  if (qtyInput.value < 1) qtyInput.value = 1;
+}
+
+function updateCart(){
+  cartCount.textContent = cart.length;
+  cartItems.innerHTML = "";
+  let subtotal = 0;
+  cart.forEach(item=>{
+    subtotal += item.price;
+    const div=document.createElement("div");
+    div.classList.add("cart-item");
+    div.innerHTML = `<span>${item.name}</span><span>₱${item.price}</span>`;
+    cartItems.appendChild(div);
+  });
+
+  let total = subtotal;
+  if(cart.length > 0){
+    let shipping = 0;
+    if(subtotal < 500){
+      shipping = SHIPPING_FEE;
+      const shipDiv=document.createElement("div");
+      shipDiv.classList.add("cart-item");
+      shipDiv.innerHTML=`<strong>Shipping Fee</strong><span>₱${shipping}</span>`;
+      cartItems.appendChild(shipDiv);
+    } else {
+      const shipDiv=document.createElement("div");
+      shipDiv.classList.add("cart-item");
+      shipDiv.innerHTML=`<strong>Shipping Fee</strong><span style="color:green;">FREE</span>`;
+      cartItems.appendChild(shipDiv);
+    }
+    total += shipping;
+  }
+  cartTotal.textContent = total.toFixed(2);
+}
+
+function showCart(){ cartModal.style.display="flex"; }
+function hideCart(){ cartModal.style.display="none"; }
+function checkout(){
+  if(cart.length===0){ alert("Your cart is empty!"); return; }
+  alert("Thank you for your purchase!");
+  cart=[];
+  updateCart();
+  hideCart();
+}
+</script>
 
 </body>
 </html>
